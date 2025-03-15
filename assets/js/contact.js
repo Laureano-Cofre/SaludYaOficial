@@ -1,6 +1,6 @@
 jQuery(document).ready(function () {
   jQuery('#contact-form').on('submit', function (e) {
-    e.preventDefault(); // Evitar la recarga de la página
+    e.preventDefault(); // Evitar recargar la página
 
     // Mostrar un indicador de carga
     swal({
@@ -10,17 +10,17 @@ jQuery(document).ready(function () {
       buttons: false,
     });
 
-    // Realizar la solicitud AJAX
+    // Realizar la solicitud AJAX (enviar como POST)
     jQuery.ajax({
       url: 'https://script.google.com/macros/s/AKfycbzCvnd1-e518lsdpZtP3rW-MzYauV5FFFJnR8-Fj4eFsrXELfXkh0zdM7_KW8S8zNA/exec', // URL del script
-      data: jQuery(this).serialize(), // Serializar los datos del formulario
-      type: 'POST', // Método HTTP
+      type: 'POST', // Asegúrate de que sea POST
+      data: jQuery(this).serialize(), // Serializa los datos del formulario
       success: function (response) {
         try {
-          // Parsear la respuesta si es necesario
+          // Verificar si la respuesta es un JSON válido
           if (typeof response === "string") response = JSON.parse(response);
 
-          // Verifica si la respuesta indica éxito
+          // Verifica si la respuesta es exitosa
           if (response.result === "success") {
             swal({
               title: "¡Gracias!",
@@ -49,7 +49,6 @@ jQuery(document).ready(function () {
         }
       },
       error: function (xhr, status, error) {
-        // Manejo de errores de la solicitud AJAX
         console.error("Error de AJAX:", status, error);
         swal({
           title: "Error",
